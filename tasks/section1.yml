@@ -407,10 +407,9 @@
 - name: "SCORED | 1.1.18 | PATCH | Ensure nodev option set on /home partition"
   mount:
       name: "/home"
-      src: "/home"
       state: mounted
       fstype: "ext4"
-      opts: "rw,nodev"
+      opts: "remounted,nodev"
   tags:
       - scored
       - level1
