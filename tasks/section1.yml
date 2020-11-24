@@ -348,10 +348,9 @@
       name: /var/tmp
       src: "{{ ubuntu2004cis_vartmp['source'] }}"
       state: mounted
-      fstype: "{{ ubuntu2004cis_vartmp['fstype'] }}"
-      opts: "{{ ubuntu2004cis_vartmp['opts'] }}"
+      fstype: tmpfs
+      opts: "rw,nodev,nosuid,noexec,bind"
   when:
-      - ubuntu2004cis_vartmp['enabled'] == 'yes'
       - ubuntu2004cis_rule_1_1_12
       - ubuntu2004cis_rule_1_1_13
       - ubuntu2004cis_rule_1_1_14
@@ -408,15 +407,10 @@
 - name: "SCORED | 1.1.18 | PATCH | Ensure nodev option set on /home partition"
   mount:
       name: "/home"
-      src: "{{ item.device }}"
+      src: "/home"
       state: mounted
-      fstype: "{{ item.fstype }}"
-      opts: "nodev"
-  when:
-      - ubuntu2004cis_rule_1_1_18
-      - item.mount == "/home"
-  with_items:
-      - "{{ ansible_mounts }}"
+      fstype: "ext4"
+      opts: "rw,nodev"
   tags:
       - scored
       - level1
